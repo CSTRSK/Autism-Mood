@@ -16,7 +16,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"
-        integrity="sha512-t38vG/f94E72wz6pCsuuhcOPJlHKwPy+PY+n1+tJFzdte3hsIgYE7iEpgg/StngunGszVMrRfvwZinrza0vMTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" media="screen,projection" />
     <!--Let browser know website is optimized for mobile-->
     <link rel="manifest" href="manifest.json">
@@ -146,12 +145,10 @@
 
 
     <!--JavaScript at end of body for optimized loading-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
-        integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -237,9 +234,33 @@
             return archive;
         }
 
-        if (typeof navigator.serviceWorker !== 'undefined') {
-            navigator.serviceWorker.register('pwabuilder-sw.js')
-        }
+        try {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        if (registration.active) {
+                            registration.addEventListener('updatefound', () => {
+                                const installingWorker = registration.installing;
+                                installingWorker.addEventListener('statechange', () => {
+                                    if (installingWorker.state === 'installed') {
+                                        onUpdateFound();
+                                    }
+                                });
+                            });
+                        }
+                    })
+                    .catch(e => console.log(e));
+            }
+        } catch (err) { }
+        try {
+            function onUpdateFound() {
+                var toastHTML = '<span id="cookieDesc" style="word-break: break-word;">A new update is ready. Do you want to update now?</i></span><button class="btn-flat toast-action" id="PWA_Update">Yes</button>';
+                M.toast({ html: toastHTML, displayLength: 120000 });
+                $("#PWA_Update").click(function (event) {
+                    location.reload();
+                });
+            }
+        } catch (err) { }
     </script>
 </body>
 
