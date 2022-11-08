@@ -9,6 +9,9 @@ In this app, autistic people or other people living in a Can't speak situation o
 - In the main screen you can now click the voice and it will speak the text in your Selected language (e.x. en-US, en-GB or de)
 - Press long for deleting in the main screen to remove the selected voice.
 
+## To-Do
+- Searchable list for voice languages
+- Propositions?: [Open a Issue][2]
 
 ## Live Version
 
@@ -19,3 +22,4 @@ Link : [Autism-Mood live version][1]
 https://www.gnu.org/licenses/gpl-3.0.en.html
 
 [1]: https://cstrsk.de/Autism-Mood/ "Autism-Mood live version"
+[2]: https://github.com/CSTRSK/Autism-Mood/issues "Open a Issue"
