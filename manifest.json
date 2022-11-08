@@ -3,6 +3,7 @@
   "lang": "en",
   "name": "Autism Mood - CSTRSK",
   "scope": "/Autism-Mood/",
+  "display_override": ["fullscreen", "minimal-ui"],
   "display": "standalone",
   "start_url": "https://cstrsk.de/Autism-Mood/",
   "short_name": "Autism Mood",
@@ -11,8 +12,8 @@
   "orientation": "any",
   "background_color": "#000000",
   "related_applications": "none",
-  "prefer_related_applications": "false",
-  "generated": "true",
+  "prefer_related_applications": "true",
+  "categories": ["kids", "health", "medical"],
   "icons": [
     {
       "src": "windows11/SmallTile.scale-100.png",
@@ -48,7 +49,8 @@
     },
     {
       "src": "windows11/Square150x150Logo.scale-200.png",
-      "sizes": "300x300"
+      "sizes": "300x300",
+      "purpose": "any"
     },
     {
       "src": "windows11/Square150x150Logo.scale-400.png",
@@ -340,7 +342,8 @@
     },
     {
       "src": "android/android-launchericon-192-192.png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
       "src": "android/android-launchericon-144-144.png",
@@ -452,7 +455,8 @@
     },
     {
       "src": "ios/256.png",
-      "sizes": "256x256"
+      "sizes": "256x256",
+      "purpose": "any"
     },
     {
       "src": "ios/512.png",

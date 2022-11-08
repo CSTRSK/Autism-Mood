@@ -149,7 +149,23 @@
         referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/long-press-event@2.4.4/src/long-press-event.min.js"></script>
     <script type="text/javascript">
+
+
+        document.addEventListener('long-press', function (e) {
+            // stop the event from bubbling up
+            e.preventDefault()
+
+            var longpressID = e.target.id;
+
+            if (confirm('Are you sure you want to delete? ' + longpressID)) {
+                localStorage.removeItem(longpressID);
+                var toastHTML = '<span style="word-break: break-word;">' + longpressID + ' has been deleted</i></span><button class="btn-flat toast-action" id="PWA_Update">✔</button>';
+                M.toast({ html: toastHTML, displayLength: 6000 });
+                window.location.reload();
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.sidenav');
@@ -218,7 +234,6 @@
                 keys = Object.keys(localStorage),
                 i = 0, key;
             if (window.localStorage.length == null || window.localStorage.length == 0) {
-                console.log("NUULLL");
                 window.location = "https://cstrsk.de/Autism-Mood/add.html";
             }
             for (; key = keys[i]; i++) {
@@ -226,7 +241,7 @@
                 if (key !== "cookies") {
                     //var arr = key.split('§');
                     const arr = localStorage.getItem(key).split("§");
-                    $("#talk_list").append('<div class="section center-align" style="min-height: 5em; margin: 5px;" onclick=\'myFunction("' + arr[0] + '","' + arr[1] + '",' + arr[2] + ',' + arr[3] + ',' + arr[4] + ')\'>' +
+                    $("#talk_list").append('<div id="' + key + '" class="section center-align waves-effect waves-red" style="min-height: 5em; margin: 5px; width:100%" data-long-press-delay="1500" onclick=\'myFunction("' + arr[0] + '","' + arr[1] + '",' + arr[2] + ',' + arr[3] + ',' + arr[4] + ')\'>' +
                         '<span class="white-text card-title">' + key + '<span class="badge" data-badge-caption="Language: ' + arr[1] + '"></span></span></div><div class="divider"></div>');
                 }
             }
@@ -254,8 +269,8 @@
         } catch (err) { }
         try {
             function onUpdateFound() {
-                var toastHTML = '<span id="cookieDesc" style="word-break: break-word;">A new update is ready. Do you want to update now?</i></span><button class="btn-flat toast-action" id="PWA_Update">Yes</button>';
-                M.toast({ html: toastHTML, displayLength: 120000 });
+                var toastHTML = '<span style="word-break: break-word;">A new update is ready. Do you want to update now?</i></span><button class="btn-flat toast-action" id="PWA_Update">Yes</button>';
+                M.toast({ html: toastHTML, displayLength: 6000 });
                 $("#PWA_Update").click(function (event) {
                     location.reload();
                 });
