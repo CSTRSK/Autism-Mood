@@ -1,4 +1,4 @@
-// VERSION 0.0.0.3
+// VERSION 0.0.0.5
 try {
     self.addEventListener('install', function(e) {
         e.waitUntil(
