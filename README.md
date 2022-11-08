@@ -19,7 +19,8 @@ Link : [Autism-Mood live version][1]
 
 ## LICENSE
 © Copyright 2008-2022 by CSTRSK All rights reserved under GNU GENERAL PUBLIC LICENSE
-https://www.gnu.org/licenses/gpl-3.0.en.html
+[GNU 3.0][3]
 
 [1]: https://cstrsk.de/Autism-Mood/ "Autism-Mood live version"
 [2]: https://github.com/CSTRSK/Autism-Mood/issues "Open a Issue"
+[3]: https://www.gnu.org/licenses/gpl-3.0.en.html "GNU 3.0"
