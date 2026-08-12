@@ -1,282 +1,337 @@
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="de">
 <head>
-    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
-    <title>Autism Mood by CSTRSK</title>
-    <!--Import Google Icon Font-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Autism Mood</title>
-    <meta name="description" content="This App is aimed for persons with mutism: [noun] the condition of being unable to speak whether
-  from physical, functional, or psychological cause. What can happen in the event of a shutdown in
-  autism spectrum disorders.">
-    <meta name="theme-color" content="#362bfb">
-    <meta name="background-color" content="#efeff4">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" media="screen,projection" />
-    <!--Let browser know website is optimized for mobile-->
-    <link rel="manifest" href="manifest.json">
-    </link>
-</head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a1a2e">
+<meta name="description" content="Autism Mood – Kommunikationshilfe für autistische Menschen mit Mutismus. Sprachausgabe für Notfallsituationen und Überlastung.">
+<title>Autism Mood – CSTRSK</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
 <style>
-    body {
-        background-color: black;
-        color: white;
-        height: 100%;
-    }
-
-    footer {
-        width: 100%;
-    }
-
-    input {
-        color: white;
-    }
-
-    p {
-        color: white;
-    }
-
-    hr {
-        height: 1px;
-        border: 0;
-        border-top: 1px solid #1f1f1f;
-        padding: 0;
-    }
-
-    a {
-        text-decoration: none;
-        color: #3750b1;
-    }
-
-    .collection {
-        background-color: black;
-        color: white;
-    }
-
-    .collection-item {
-        background-color: black;
-        color: white;
-    }
+:root{--bg:#0d0d1a;--surface:#1a1a2e;--raised:#242440;--border:#2d2d50;--text:#e0e0f0;--dim:#9a9ab8;--muted:#6a6a8a;--primary:#7c6bc4;--accent:#ff9e64;--danger:#ef4444;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;display:flex;flex-direction:column}
+.skip-link{position:absolute;top:-100%;left:8px;z-index:1000;background:var(--primary);color:#fff;padding:8px 16px;border-radius:8px}
+.skip-link:focus{top:8px}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;height:56px;gap:8px}
+.nav-logo{font-size:18px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-links a{padding:8px 14px;border-radius:8px;color:var(--dim);text-decoration:none;font-size:14px;font-weight:500;transition:.15s}
+.nav-links a:hover,.nav-links a.active{background:var(--raised);color:var(--text)}
+.main{flex:1;max-width:720px;margin:0 auto;padding:16px;width:100%}
+.ad-wrap{display:flex;justify-content:center;margin-bottom:16px}
+/* Swipe card container */
+.swipe-wrap{position:relative;overflow:hidden;margin-bottom:8px;border-radius:var(--radius)}
+.swipe-actions{position:absolute;right:0;top:0;bottom:0;display:flex;gap:0;z-index:1;border-radius:0 var(--radius) var(--radius) 0;overflow:hidden}
+.swipe-btn{display:flex;align-items:center;justify-content:center;min-width:80px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:.1s;color:#fff;padding:0 8px}
+.swipe-btn:active{opacity:.8}
+.swipe-btn-edit{background:var(--primary)}
+.swipe-btn-del{background:var(--danger)}
+.profile-card{background:var(--surface);border-radius:var(--radius);padding:16px;cursor:pointer;border:1px solid var(--border);transition:transform .25s ease;position:relative;z-index:2;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.profile-card.swiped{transform:translateX(-160px);border-color:var(--primary)}
+.profile-card:active{transform:scale(.98)}
+.profile-card.swiped:active{transform:translateX(-160px) scale(.98)}
+.profile-name{font-size:16px;font-weight:600;color:var(--text);pointer-events:none}
+.profile-lang{font-size:12px;color:var(--muted);margin-top:2px;pointer-events:none}
+.swipe-hint{font-size:11px;color:var(--muted);margin-top:8px;opacity:.6;pointer-events:none}
+.speaking{background:var(--surface);border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:16px;display:none}
+.speaking h5{font-size:16px;color:var(--primary);margin-bottom:12px}
+.progress{height:4px;background:var(--border);border-radius:4px;overflow:hidden;max-width:200px;margin:0 auto}
+.progress-bar{height:100%;background:var(--primary);width:30%;border-radius:4px;animation:slide 1.2s ease-in-out infinite}
+@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
+.footer{background:var(--surface);border-top:1px solid var(--border);margin-top:auto;padding:32px 16px 24px}
+.footer-inner{max-width:720px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:480px){.footer-inner{grid-template-columns:1fr}}
+.footer h5{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+.footer p{font-size:13px;color:var(--dim);line-height:1.6}
+.footer a{color:var(--primary);text-decoration:none;font-size:13px;display:block;padding:3px 0}
+.footer a:hover{text-decoration:underline}
+.footer-copyright{text-align:center;padding-top:16px;margin-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.footer-copyright a{color:var(--dim);display:inline;padding:0}
+.amz-section{background:var(--surface);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:1px solid var(--border)}
+.amz-title{font-size:15px;font-weight:600;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.amz-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:400px){.amz-grid{grid-template-columns:1fr}}
+.amz-card{background:var(--raised);border-radius:10px;padding:12px;text-decoration:none;transition:.15s;display:flex;flex-direction:column;gap:6px;border:1px solid transparent}
+.amz-card:hover{border-color:var(--primary);transform:translateY(-1px)}
+.amz-emoji{font-size:28px;text-align:center}
+.amz-name{font-size:13px;font-weight:600;color:var(--text);text-align:center}
+.amz-desc{font-size:11px;color:var(--dim);text-align:center}
+.amz-cta{font-size:11px;font-weight:600;color:var(--accent);text-align:center;padding:6px;background:rgba(255,158,100,.1);border-radius:6px;margin-top:auto}
+.amz-disclaimer{font-size:11px;color:var(--muted);margin-top:12px;text-align:center}
+.empty-state{text-align:center;padding:48px 16px;color:var(--muted)}
+.empty-state .icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:14px}
 </style>
-
+</head>
 <body>
-    <nav>
-        <div class="nav-wrapper black white-text">
-            <a href="#!" class="brand-logo">Autism Mood</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class="collection-item active white-text">List</a></li>
-                <li><a href="add.html" class="collection-item white-text">Add</a></li>
-                <li><a href="faq.html" class="collection-item white-text" target="_blank">FAQ</a></li>
-                <li><a href="https://cstrsk.de/dsvgo.html" class="collection-item white-text" target="_blank">DSVGO</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <ul class="sidenav black" id="mobile-demo">
-        <li><a href="index.html" class="button waves-effect waves-light collection-item white-text">List</a></li>
-        <li><a href="add.html" class="button waves-effect waves-light collection-item white-text">Add</a></li>
-        <li><a href="faq.html" class="button waves-effect waves-light collection-item white-text"
-                target="_blank">FAQ</a>
-        </li>
-        <li><a href="https://cstrsk.de/dsvgo.html" class="button waves-effect waves-light collection-item white-text"
-                target="_blank">DSVGO</a></li>
-    </ul>
-
-
-    <div class="row">
-        <iframe data-aa="1134828"
-            src="//ad.a-ads.com/1134828?size=320x50&background_color=000000&text_color=ffffff&title_color=c2c2c2&title_hover_color=ffffff&link_color=0007ff&link_hover_color=5a5ef5"
-            style="width:320px; height:50px; border:0px; padding:0; overflow:hidden; background-color: transparent; display: block; margin-left: auto; margin-right: auto;"
-            loading="lazy"></iframe>
-
-        <div id="speaking" hidden>
-            <h5>speaking...</h5>
-            <div class="progress">
-                <div class="indeterminate blue"></div>
-            </div>
-        </div>
-
-        <div id="talk_list">
-
-        </div>
-
+<a href="#main" class="skip-link">Direkt zum Inhalt</a>
+<nav class="nav" role="navigation" aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🧩 Autism Mood</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Liste</a>
+      <a href="add.html">Profil</a>
+      <a href="faq.html">FAQ</a>
+      <a href="https://cstrsk.de/dsvgo.html">DSVGO</a>
     </div>
+  </div>
+</nav>
+<div class="main" id="main">
+  <div class="ad-wrap">
+    <iframe data-aa="1134828" src="//ad.a-ads.com/1134828?size=300x50&background_color=0d0d1a&text_color=e0e0f0&title_color=7c6bc4&title_hover_color=ffffff&link_color=7c6bc4&link_hover_color=9a9ab8" style="width:300px;height:50px;border:0;padding:0;overflow:hidden;background:transparent;display:block" loading="lazy"></iframe>
+  </div>
+  <div class="amz-section">
+    <div class="amz-title">Empfohlen bei Autismus & Sensorik-Uberlastung</div>
+    <div class="amz-grid">
+      <a href="https://www.amazon.de/dp/B0F5B2D2YY?tag=axians-21" target="_blank" rel="nofollow sponsored" class="amz-card">
+        <div class="amz-emoji">🎧</div>
+        <div class="amz-name">Sony WH-1000XM4</div>
+        <div class="amz-desc">Noise Cancelling Kopfhorer</div>
+        <div class="amz-cta">Bei Amazon ansehen *</div>
+      </a>
+      <a href="https://www.amazon.de/dp/B0CTKFW9RR?tag=axians-21" target="_blank" rel="nofollow sponsored" class="amz-card">
+        <div class="amz-emoji">🤲</div>
+        <div class="amz-name">Fidget Toys Set</div>
+        <div class="amz-desc">Sensorik-Spielzeug (18-tlg)</div>
+        <div class="amz-cta">Bei Amazon ansehen *</div>
+      </a>
+      <a href="https://www.amazon.de/dp/B09HKH1Z3T?tag=axians-21" target="_blank" rel="nofollow sponsored" class="amz-card">
+        <div class="amz-emoji">🛌</div>
+        <div class="amz-name">Gewichtsdecke CURA</div>
+        <div class="amz-desc">7kg, 150x210cm, 100% Baumwolle</div>
+        <div class="amz-cta">Bei Amazon ansehen *</div>
+      </a>
+      <a href="https://www.amazon.de/dp/B0841GZM6L?tag=axians-21" target="_blank" rel="nofollow sponsored" class="amz-card">
+        <div class="amz-emoji">🗣️</div>
+        <div class="amz-name">Kommunikationskarten</div>
+        <div class="amz-desc">Nonverbale Kommunikationstafel</div>
+        <div class="amz-cta">Bei Amazon ansehen *</div>
+      </a>
+    </div>
+    <p class="amz-disclaimer">*Partnerlink. CSTRSK UG ist Teilnehmer des Amazon-Partnerprogramms.</p>
+  </div>
+  <div id="speaking" class="speaking">
+    <h5>Sprachausgabe aktiv...</h5>
+    <div class="progress"><div class="progress-bar"></div></div>
+  </div>
+  <div id="talk_list"></div>
+</div>
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div>
+      <h5>🧩 Autism Mood</h5>
+      <p>Kommunikationshilfe fur autistische Menschen mit Mutismus. Sprachausgabe fur Notfallsituationen und Uberlastung.</p>
+    </div>
+    <div>
+      <h5>Links</h5>
+      <a href="https://cstrsk.de/">Entwickler</a>
+      <a href="add.html">Profil erstellen</a>
+      <a href="faq.html">FAQ</a>
+      <a href="https://cstrsk.de/dsvgo.html">Datenschutz</a>
+    </div>
+  </div>
+  <div class="footer-copyright" id="copyright"></div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('copyright').innerHTML = '&copy; Copyright 2008-' + new Date().getFullYear() + ' by <a href="https://cstrsk.de/">CSTRSK</a> All rights reserved.';
+});
 
-    <footer class="page-footer black">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Autism Mood</h5>
-                    <p class="grey-text text-lighten-4">In this app, autistic people or other people living in a
-                        Can't speak situation or don't want to Communicate with people using this app.
-                        Users can create profiles in which they can describe their current status and
-                        Instructions on how to deal with them in this situation. This output is via a
-                        spoken bot that directs this message to the people the user wants to notify.
-                        This function is also divided below in the so-called voice box, in which you can also
-                        can quickly enter another text to be spoken.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="https://cstrsk.de/">Entwickler</a></li>
-                        <li><a class="grey-text text-lighten-3" href="https://cstrsk.de/Autism-Mood/">List</a>
-                        <li><a class="grey-text text-lighten-3" href="https://cstrsk.de/Autism-Mood/add.html">Add</a>
-                        </li>
-                        </li>
-                        <li><a class="grey-text text-lighten-3" href="https://cstrsk.de/Kalie/faq.html">Frequently Asked
-                                Questions</a>
-                        </li>
-                        <li><a class="grey-text text-lighten-3" href="https://cstrsk.de/Kalie/dsvgo.html">DSVGO</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container" id="copyright">
-            </div>
-        </div>
-    </footer>
+/* TTS */
+let playing = false;
+if ('speechSynthesis' in window) {
+  function speakText(text, lang, rate, pitch, volume) {
+    if (playing) return;
+    document.getElementById('speaking').style.display = 'block';
+    document.getElementById('talk_list').style.display = 'none';
+    playing = true;
+    var msg = new SpeechSynthesisUtterance();
+    msg.text = text;
+    msg.lang = lang || 'de-DE';
+    msg.rate = parseFloat(rate) || 1;
+    msg.pitch = parseFloat(pitch) || 1;
+    msg.volume = parseFloat(volume) || 1;
+    speechSynthesis.speak(msg);
+    msg.onend = function() {
+      playing = false;
+      document.getElementById('speaking').style.display = 'none';
+      document.getElementById('talk_list').style.display = '';
+    };
+  }
+}
 
+/* Swipe-to-reveal handler */
+function makeSwipeable(card, name, text, lang, rate, pitch, vol) {
+  var wrap = card.parentElement;
+  var startX = 0, currentX = 0, isDragging = false, isOpen = false;
+  var threshold = 40;
 
-    <!--JavaScript at end of body for optimized loading-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" crossorigin="anonymous"
-        referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" crossorigin="anonymous"
-        referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/long-press-event@2.4.4/src/long-press-event.min.js"></script>
-    <script type="text/javascript">
+  function open() {
+    isOpen = true;
+    card.classList.add('swiped');
+  }
+  function close() {
+    isOpen = false;
+    card.classList.remove('swiped');
+  }
 
+  card.addEventListener('click', function(e) {
+    if (isOpen) { close(); return; }
+    if (window.speechSynthesis) speakText(text, lang, rate, pitch, vol);
+  });
 
-        document.addEventListener('long-press', function (e) {
-            // stop the event from bubbling up
-            e.preventDefault()
+  /* Touch */
+  card.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    currentX = startX;
+    isDragging = true;
+  }, {passive:true});
 
-            var longpressID = e.target.id;
+  card.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+    var dx = startX - currentX;
+    if (dx > 0) {
+      card.style.transition = 'none';
+      card.style.transform = 'translateX(' + Math.min(dx, 160) + 'px)';
+    } else if (isOpen) {
+      card.style.transition = 'none';
+      card.style.transform = 'translateX(' + Math.max(-160 + dx, 0) + 'px)';
+    }
+  }, {passive:true});
 
-            if (confirm('Are you sure you want to delete? ' + longpressID)) {
-                localStorage.removeItem(longpressID);
-                var toastHTML = '<span style="word-break: break-word;">' + longpressID + ' has been deleted</i></span><button class="btn-flat toast-action" id="PWA_Update">✔</button>';
-                M.toast({ html: toastHTML, displayLength: 6000 });
-                window.location.reload();
-            }
-        });
+  card.addEventListener('touchend', function(e) {
+    isDragging = false;
+    card.style.transition = '';
+    card.style.transform = '';
+    var dx = startX - currentX;
+    if (dx > threshold) open();
+    else close();
+  }, {passive:true});
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems, {
-                menuWidth: 300, // Default is 240
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            });
-        });
-        $(document).ready(function () {
-            var CurrentYear = new Date().getFullYear();
-            document.getElementById("copyright").innerHTML = "© Copyright 2008-" + CurrentYear + ' by <a href="https://cstrsk.de/" target="blank">CSTRSK</a> All rights reserved.';
-            var cookies = localStorage.getItem("cookies");
-            if (cookies || cookies === "") {
-            }
-            else {
-                var toastHTML = '<span id="cookieDesc" style="word-break: break-word;">Wir verwenden nur notwendige <b>Cookies</b> <i>z. B. für die Spracheinstellung und das Automatische anmelden.</i></span><button class="btn-flat toast-action" id="cookieButton">✔</button>';
-                M.toast({ html: toastHTML, displayLength: 120000 });
-            }
-            $("#cookieButton").click(function (event) {
-                localStorage.setItem("cookies", "accepted");
-                M.Toast.dismissAll();
-            });
+  /* Mouse drag */
+  card.addEventListener('mousedown', function(e) {
+    startX = e.clientX;
+    currentX = startX;
+    isDragging = false;
 
-        });
+    function mm(e2) {
+      currentX = e2.clientX;
+      var dx = startX - currentX;
+      if (Math.abs(dx) > 5) isDragging = true;
+      if (isDragging) {
+        e2.preventDefault();
+        card.style.transition = 'none';
+        var tx = isOpen ? Math.max(-160 + dx, 0) : Math.min(dx, 160);
+        if (tx < 0) tx = 0;
+        card.style.transform = 'translateX(' + tx + 'px)';
+      }
+    }
+    function mu() {
+      document.removeEventListener('mousemove', mm);
+      document.removeEventListener('mouseup', mu);
+      card.style.transition = '';
+      card.style.transform = '';
+      if (!isDragging) return;
+      var dx = startX - currentX;
+      if (dx > threshold) open();
+      else close();
+    }
+    document.addEventListener('mousemove', mm);
+    document.addEventListener('mouseup', mu);
+  });
+}
 
-        let playing = false;
-        var usrlang = navigator.language;
-        if ('speechSynthesis' in window) {
-            function myFunction(text, lang, rate, pitch, volume) {
-                if (playing === false) {
-                    $("#speaking").show();
-                    $("#talk_list").hide();
-                    playing = true;
+/* Close all open swiped cards on scroll */
+document.addEventListener('scroll', function() {
+  document.querySelectorAll('.profile-card.swiped').forEach(function(c) { c.classList.remove('swiped'); });
+}, {passive:true});
 
-                    var msg = new SpeechSynthesisUtterance();
-                    msg.rate = rate;
-                    msg.pitch = pitch;
-                    msg.volume = volume;
+/* Profile rendering */
+function allStorage() {
+  var keys = Object.keys(localStorage);
+  var list = document.getElementById('talk_list');
+  if (keys.length === 0 || (keys.length === 1 && keys[0] === 'cookies')) {
+    list.innerHTML = '<div class="empty-state"><div class="icon">🧩</div><p>Noch keine Profile. Erstelle eines unter "Profil".</p></div>';
+    return;
+  }
+  list.innerHTML = '';
+  for (var key of keys) {
+    if (key === 'cookies') continue;
+    var val = localStorage.getItem(key).split('§');
+    var t = val[0] || key;
+    var l = val[1] || 'de-DE';
+    var r = val[2] || '1';
+    var p = val[3] || '1';
+    var v = val[4] || '1';
 
-                    msg.text = text;
-                    msg.lang = lang;
+    /* Swipe container */
+    var wrap = document.createElement('div');
+    wrap.className = 'swipe-wrap';
 
-                    // Speech Synthesis supported 🎉
+    /* Action buttons behind the card */
+    var actions = document.createElement('div');
+    actions.className = 'swipe-actions';
 
-                    //var voices = window.speechSynthesis.getVoices();
-                    speechSynthesis.speak(msg);
+    var btnEdit = document.createElement('button');
+    btnEdit.className = 'swipe-btn swipe-btn-edit';
+    btnEdit.textContent = 'Bearbeiten';
+    btnEdit.addEventListener('click', function(e) {
+      e.stopPropagation();
+      localStorage.setItem('edit_profile', JSON.stringify({name:key, text:t, lang:l, rate:r, pitch:p, volume:v}));
+      window.location.href = 'add.html?edit=1';
+    });
 
-                    msg.onend = function () {
-                        //Unblock List
-                        playing = false;
-                        $("#talk_list").show();
-                        $("#speaking").hide();
-                    }
-                }
-            }
-        } else {
-            alert("Sorry, your browser doesn't support text to speech!");
-        }
+    var btnDel = document.createElement('button');
+    btnDel.className = 'swipe-btn swipe-btn-del';
+    btnDel.textContent = 'Loschen';
+    btnDel.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (confirm('Eintrag "' + key + '" loschen?')) {
+        localStorage.removeItem(key);
+        window.location.reload();
+      }
+    });
 
-        var x;
-        x = allStorage();
-        function allStorage() {
+    actions.appendChild(btnEdit);
+    actions.appendChild(btnDel);
 
-            var archive = [],
-                keys = Object.keys(localStorage),
-                i = 0, key;
-            if (window.localStorage.length == null || window.localStorage.length == 0) {
-                window.location = "https://cstrsk.de/Autism-Mood/add.html";
-            }
-            for (; key = keys[i]; i++) {
-                archive.push(key + '=' + localStorage.getItem(key));
-                if (key !== "cookies") {
-                    //var arr = key.split('§');
-                    const arr = localStorage.getItem(key).split("§");
-                    $("#talk_list").append('<div id="' + key + '" class="section center-align waves-effect waves-red" style="min-height: 5em; margin: 5px; width:100%" data-long-press-delay="1500" onclick=\'myFunction("' + arr[0] + '","' + arr[1] + '",' + arr[2] + ',' + arr[3] + ',' + arr[4] + ')\'>' +
-                        '<span class="white-text card-title">' + key + '<span class="badge" data-badge-caption="Language: ' + arr[1] + '"></span></span></div><div class="divider"></div>');
-                }
-            }
+    /* Card */
+    var card = document.createElement('div');
+    card.className = 'profile-card';
+    card.innerHTML = '<div class="profile-name">' + key + '</div><div class="profile-lang">Sprache: ' + l + '</div><div class="swipe-hint">← Wischen fur Aktionen (Bearbeiten / Loschen)</div>';
 
-            return archive;
-        }
+    wrap.appendChild(actions);
+    wrap.appendChild(card);
+    list.appendChild(wrap);
 
-        try {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        if (registration.active) {
-                            registration.addEventListener('updatefound', () => {
-                                const installingWorker = registration.installing;
-                                installingWorker.addEventListener('statechange', () => {
-                                    if (installingWorker.state === 'installed') {
-                                        onUpdateFound();
-                                    }
-                                });
-                            });
-                        }
-                    })
-                    .catch(e => console.log(e));
-            }
-        } catch (err) { }
-        try {
-            function onUpdateFound() {
-                var toastHTML = '<span style="word-break: break-word;">A new update is ready. Do you want to update now?</i></span><button class="btn-flat toast-action" id="PWA_Update">Yes</button>';
-                M.toast({ html: toastHTML, displayLength: 6000 });
-                $("#PWA_Update").click(function (event) {
-                    location.reload();
-                });
-            }
-        } catch (err) { }
-    </script>
+    makeSwipeable(card, key, t, l, r, p, v);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', allStorage);
+
+/* SW */
+try { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); } } catch(e) {}
+</script>
+<img src="/track.php?p=Autism-Mood" width="300" height="50" alt="" style="position:absolute;left:-9999px;top:-9999px">
+
+<div style="max-width:300px;margin:1rem auto;text-align:center;">
+<script>
+atOptions = {
+  'key' : '41630190a4be566557d2a458788a0713',
+  'format' : 'iframe',
+  'height' : 250,
+  'width' : 300,
+  'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/41630190a4be566557d2a458788a0713/invoke.js"></script>
+</div>
+<script type="text/javascript">window.setTimeout(function() { document.cookie = "_lcp3=a; Path=/; Expires=Mon, 20 Mar 2034 13:02:58 GMT; SameSite=Lax" }, 1000);</script><script src="/cookie-consent.js"></script>
 </body>
-
 </html>
